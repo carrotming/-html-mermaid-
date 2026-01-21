@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+  <link rel="stylesheet" href="../css/markdown.css" type="text/css"></link>
+  <link rel="stylesheet" href="../css/github-markdown.min.css" type="text/css"></link>
+  <link rel="stylesheet" href="../css/github.min.css" type="text/css"></link>
+  <meta charset="utf-8"/>
+  <style>
+      body{
+          background-color: #fff;
+      }
+      .itemlabel {
+          font-size: 16px !important;
+      }
+      body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+          color: #333;
+      }
+      h1 {
+          display: block;
+          font-size: 2em;
+          margin-block-start: 0.67em;
+          margin-block-end: 0.67em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+          unicode-bidi: isolate;
+      }
+      h2 {
+          color: #2c3e50;
+          display: block;
+          font-size: 1.5em;
+          margin-block-start: 0.83em;
+          margin-block-end: 0.83em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+          unicode-bidi: isolate;
+      }
+      h3 {
+          display: block;
+          font-size: 1.17em;
+          margin-block-start: 1em;
+          margin-block-end: 1em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+          unicode-bidi: isolate;
+          line-height: 1.6;
+      }
+      p {
+          line-height: 1.6;
+          margin: 16px 0;
+          font-size: 14pt !important;
+      }
+      .edgeLabel p {
+          font-size: inherit !important;
+      }
+
+      .highlight {
+          background-color: #f9f9f9;
+          padding: 5px;
+          border-radius: 3px;
+      }
+      .case-nature {
+          background-color: #e8f5e9;
+          color: #2e7d32;
+      }
+      .evidence {
+          background-color: #fff3e0;
+          color: #e65100;
+      }
+      .evidence2 {
+          background-color: #eabff1;
+          color: #9C27B0;
+      }
+      .contradiction {
+          background-color: #ffebee;
+          color: #c62828;
+      }
+      .verify {
+          background-color: #e3f2fd;
+          color: #1565c0;
+      }
+      .interrogation {
+          background-color: #f3e5f5;
+          color: #6a1b9a;
+      }
+      .investigation {
+          background-color: #e0f7fa;
+          color: #00838f;
+      }
+      .risk {
+          background-color: #fff8e1;
+          color: #f57f17;
+          font-size: 16px;
+      }
+
+
+      .think{
+          white-space: pre-line;
+          font-family: Arial, sans-serif !important;
+          font-size: 17px !important;
+          padding-right: 32px !important;
+      }
+
+      .loader-box{
+          padding: 5px 10px;
+          display: flex;
+          align-items: center;
+      }
+
+      .loader {
+          width: 13px;
+          height: 13px;
+          margin-left: 10px;
+          border: 2px solid #9d9797;
+          border-left-color: #fff;
+          border-radius: 100px;
+          animation: loading 1s infinite linear;
+      }
+
+      @keyframes loading{
+          from{
+              transform: rotate(0deg);
+          }
+          to{
+              transform: rotate(360deg);
+          }
+      }
+      .mermaid-error {
+          display: none !important;
+      }
+
+      .error-icon{
+          display: none !important;
+      }
+      .error-text{
+          display: none !important;
+      }
+
+      .think-container {
+          position: relative;
+          overflow: hidden;
+          transition: height 0.3s ease;
+          margin-bottom: 10px;
+      }
+
+      .think-arrow-btn {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: #f0f0f0;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          width: 24px;
+          height: 24px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          user-select: none;
+          z-index: 10;
+      }
+
+
+      /* 菜单按钮样式 */
+      .context-btn {
+          border-radius: 50%;
+          border: none;
+          font-size: 12px !important;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          letter-spacing: 1px;
+          overflow: hidden;
+          cursor: pointer;
+          position: absolute;
+      }
+      .context-btn:first-child{
+          top: 5px;
+          right: 5px;
+      }
+      .context-btn:last-child{
+          top: 5px;
+          right: 26px;
+      }
+      .context-btn:hover {
+          background: #f0f0f0;
+      }
+
+      .context-btn:not(:last-child) {
+          border-bottom: 1px solid #eee;
+      }
+
+      svg{
+          background-color: transparent !important;
+      }
+
+  </style>
+</head>
+
+<body>
+<div id="content" style="overflow-y: auto;padding:0px 20px 20px 20px;">
+
+  <div id="loader-container">
+    <div class="loader-box">
+      思考中
+      <div class='loader'></div>
+    </div>
+  </div>
+  <div class="itemlabel markdown-body" id="jgDiv"></div>
+  <div id="saveDom" style="height : 0"></div>
+</div>
+
+
+<script src="../js/jquery-3.6.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../js/marked-1.js"></script>
+<script type="text/javascript" src="../js/highlight.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+  if(sessionStorage.getItem('chorme') >=107){
+    let scriptDom = document.createElement('script')
+    scriptDom.src = '/static/js/mermaid.min.js'
+    document.head.appendChild(scriptDom)
+    scriptDom.onload = ()=>{
+      mermaid.initialize({ startOnLoad: false,suppressErrorRendering: true,  securityLevel: 'loose',theme: 'default'});
+    }
+
+    /*  let scriptDom1 = document.createElement('script')
+      scriptDom1.src = '/static/jsnew/marked-1.js'
+      document.head.appendChild(scriptDom1)
+      scriptDom1.onload = ()=>{
+        marked.setOptions({ gfm: true, tables: true })
+      }*/
+  }else{
+    /*   let scriptDom1 = document.createElement('script')
+       scriptDom1.src = '/static/js/marked-1.js'
+       document.head.appendChild(scriptDom1)
+       scriptDom1.onload = ()=>{
+         marked.setOptions({ gfm: true, tables: true })
+       }*/
+  }
+
+  let source = null
+  let conT = ''
+
+
+  let finishTip = '当前服务繁忙，请稍后重试。'
+
+  let finishIndexArr = []
+
+
+  let mermaidBefore = document.createElement('div');
+  let SD = document.createElement('div')
+  let flag = false
+  let mFlag = false
+  let finishIndex = 0
+  let dom = document.createElement('div')
+  let svgId = '';
+  let index = 0;
+  let xrFlag = false
+  let isFinish = false
+  let xfdom = null
+  let successSvg = ''
+  let showChunk = ''
+  const syntaxEndMarkers = ['\n', ';', ']', '}']; // 语法结束标志
+  const container = document.getElementById('jgDiv');
+  const statusEl = document.getElementById('status');
+  let renderTimeout = null;
+
+  let svgDom = null
+
+  let  RENDER_DELAY_MS = 20;
+
+  let mermaidFinish = false
+
+  let svgIndex = 0
+
+  let svgnewdom = null
+
+
+  let mermaidIndex = 0
+
+  let finishTipFlag = false
+
+
+  let daoJiShi = 300
+  let daoJiShiCount = 0
+  let daoJiShiInterval = null
+  let daoJiShiTime = 1000
+
+  let errorTip = '当前服务繁忙，请稍后重试。'
+
+
+
+
+
+  function handleRender(svg,d){
+    $(document).scrollTop($("#content")[0].scrollHeight)
+    let renderDom = svg.substring(0,svgIndex)
+    svgIndex += 50
+    setTimeout(() => {
+      d.innerHTML = renderDom
+      if(svgIndex>= svg.length) {
+        mermaidFinish = true
+        svgIndex = 0
+        successSvg = d.innerHTML
+    /*    let svg = d.querySelector('svg')
+        svg.setAttribute('id', 'saveDome2' + mermaidIndex)*/
+        xrFlag = true
+        flag = false
+        container.appendChild(dom)
+        index ++
+        if(index > conT.length){
+          index = conT.length + 2
+        }
+        onChunkReceived();
+      }else{
+        handleRender(svg,d)
+      }
+    },10)
+  }
+
+  function processChunkSuccess(svg){
+    let d = document.getElementById('saveDom2' + mermaidIndex)
+    handleRender(svg,d)
+  }
+
+  function processChunkError(){
+    flag = false
+    let d = document.getElementById('saveDom2' + mermaidIndex)
+    d.innerHTML = '格式不对，渲染失败'
+    console.log('最后渲染失败')
+    xfdom = document.createElement('div')
+    xfdom.style.marginBottom = '20px'
+    xfdom.innerHTML =  '格式不对，渲染失败'
+    // container.appendChild(xfdom)
+    let sv = document.getElementById('saveDom' + mermaidIndex)
+    if(sv){
+      sv.style.display = 'none'
+    }
+    xrFlag = false
+    container.appendChild(dom)
+    index ++
+    if(index > conT.length){
+      index = conT.length + 2
+    }
+
+    onChunkReceived();
+    return false
+  }
+
+  function processChunk() {
+    let fIndex = 0
+
+    finishIndexArr.forEach((item)=>{
+      fIndex += item
+    })
+
+    let chunk = conT.slice(fIndex,index)
+    if(flag){
+
+
+
+
+      RENDER_DELAY_MS = 20
+
+      container.innerHTML = container.innerHTML.replace('```mermaid','')
+      container.innerHTML = container.innerHTML.replace('```mermai','')
+
+      let c = chunk.split('```mermaid')[1]
+      if( chunk.indexOf('```mermaid') > -1){
+        c = chunk.split('```mermaid')[1]
+      }else if(chunk.indexOf('``` mermaid') > -1){
+        c = chunk.split('``` mermaid')[1]
+      }
+      if(c && c.indexOf('```') > - 1){
+        let  mHtml = ''
+        if(c.indexOf('```') > - 1) {
+          mHtml = c.split('```')[1]
+          finishIndex = chunk.length  - mHtml.length
+        }else if(c.indexOf('``') > - 1){
+          finishIndex = chunk.length + 1
+        }else{
+          finishIndex = chunk.length + 2
+        }
+
+        finishIndexArr.push(finishIndex)
+
+        dom = document.createElement('div')
+        let mermaidHtml = c.split('```')[0]
+        let saveDom = document.getElementById('saveDom' + mermaidIndex)
+        if(saveDom){
+          saveDom.parentNode.removeChild(saveDom)
+        }
+        if(sessionStorage.getItem('chorme') >= 107){
+
+          const svgElements = document.querySelectorAll('svg');
+
+// 遍历每个SVG元素
+          svgElements.forEach(svg => {
+            // 检查id是否不以'saveDom'开头（id为空也满足条件）
+            if (!svg.id || !svg.id.startsWith('saveDom')) {
+              svg.style.display = 'none';
+            }
+          });
+
+
+          document.querySelectorAll('v').forEach(svg => {
+            svg.style.display = 'none'
+          });
+          document.querySelectorAll('b').forEach(svg => {
+            svg.style.display = 'none'
+          });
+
+
+
+          mermaid.render('saveDome2' + mermaidIndex, mermaidHtml)
+            .then(({ svg }) => {
+              let saveDom = document.getElementById('saveDom2' + mermaidIndex)
+              if(!saveDom && svg){
+                console.log('渲染成功找不到saveDom' + mermaidIndex)
+                let d = document.createElement('div')
+                d.innerHTML = svg;
+                d.setAttribute('id', 'saveDom2' + mermaidIndex)
+                container.appendChild(d)
+                successSvg = d.innerHTML
+              }else{
+                console.log('渲染成功找到saveDom' + mermaidIndex)
+                saveDom.innerHTML = svg;
+                successSvg = saveDom.innerHTML
+              }
+              mermaidFinish = true
+
+              xrFlag = true
+              flag = false
+
+              container.appendChild(dom)
+              index ++
+              if(index > conT.length){
+                index = conT.length + 2
+              }
+
+              onChunkReceived();
+            })
+            .catch(err => {
+              flag = false
+              mermaidFinish = true
+              console.log('最后渲染失败')
+              xfdom = document.createElement('div')
+              xfdom.style.marginBottom = '20px'
+              xfdom.innerHTML =  '格式不对，渲染失败'
+              container.appendChild(xfdom)
+              let sv = document.getElementById('saveDom' + mermaidIndex)
+              if(sv){
+                sv.style.display = 'none'
+              }
+              xrFlag = false
+              container.appendChild(dom)
+              index ++
+              if(index > conT.length){
+                index = conT.length + 2
+              }
+
+              onChunkReceived();
+              return false
+            });
+        }else{
+
+          window.parent.postMessage({
+            type : 'handleGetSvgMermaid',
+            data : {
+              mermaidHtml: mermaidHtml,
+            }
+          },'*')
+        }
+      }else{
+        if(sessionStorage.getItem('chorme') >= 107){
+          const svgElements = document.querySelectorAll('svg');
+// 遍历每个SVG元素
+          svgElements.forEach(svg => {
+            // 检查id是否不以'saveDom'开头（id为空也满足条件）
+            if (!svg.id.startsWith('saveDom')) {
+              svg.style.display = 'none';
+            }
+          });
+          document.querySelectorAll('v').forEach(svg => {
+            svg.style.display = 'none'
+          });
+          document.querySelectorAll('b').forEach(svg => {
+            svg.style.display = 'none'
+          });
+          if (c.indexOf('\n') > -1) {
+            mermaid.render('saveDom' + mermaidIndex, c)
+              .then(({ svg }) => {
+                console.log('渲染成功')
+                let saveDom = document.getElementById('saveDom' + mermaidIndex)
+                if(!saveDom && svg){
+                  let d = document.createElement('div')
+                  d.innerHTML = svg;
+                  container.appendChild(d)
+                  successSvg = d.innerHTML
+                }else{
+                  saveDom.innerHTML = svg;
+                  successSvg = saveDom.innerHTML
+                }
+                xrFlag = true
+                index ++
+                if(index > conT.length){
+                  index = conT.length + 2
+                }
+
+                onChunkReceived();
+                // updateStatus('图形渲染成功');
+              })
+              .catch(err => {
+                container.innerHTML += successSvg
+                console.log('渲染失败')
+                xrFlag = false
+                index ++
+                if(index > conT.length){
+                  index = conT.length + 2
+                }
+
+                onChunkReceived();
+                return false
+              });
+          }else{
+            index ++
+            if(index > conT.length){
+              index = conT.length + 2
+            }
+            onChunkReceived();
+          }
+        }else{
+          if(c){
+            index ++
+            if(index > conT.length){
+              index = conT.length + 2
+            }
+            onChunkReceived();
+          }
+        }
+      }
+    }else{
+      RENDER_DELAY_MS = 20
+      // && !mermaidFinish
+      if( (chunk.indexOf('```mermaid') > -1 || chunk.indexOf('``` mermaid') > -1)   ){
+        mermaidIndex ++
+        if(sessionStorage.getItem('chorme') <107){
+          svgnewdom = document.createElement('div')
+          svgnewdom.innerHTML = '生成中'
+          container.appendChild(svgnewdom)
+          svgnewdom.setAttribute('id', 'saveDom2' + mermaidIndex)
+        }
+        successSvg = ''
+
+        let  b = ''
+        if(chunk.indexOf('```mermaid') > -1){
+          b = chunk.split('```mermaid')[0]
+        }else if(chunk.indexOf('``` mermaid') > -1){
+          b = chunk.split('``` mermaid')[0]
+        }
+        let div   = document.createElement('div')
+        div.innerHTML = marked.parse(b)
+        mermaidBefore = div;
+        index ++
+        if(index > conT.length){
+          index = conT.length + 2
+        }
+        flag = true
+
+        onChunkReceived();
+      }else{
+        if(finishIndex > 0){
+          dom.innerHTML = marked.parse(chunk)
+        }else{
+          var html = marked.parse(chunk);
+          if(html){
+            container.innerHTML = html
+          }
+        }
+        index ++
+        if(index > conT.length){
+          index = conT.length + 2
+        }
+
+
+      }
+      onChunkReceived();
+    }
+    $(document).scrollTop($("#content")[0].scrollHeight)
+  }
+
+
+  function onChunkReceived() {
+    if(!source) return;
+    if(isFinish && index > conT.length + 1) {
+      if(finishTipFlag) return;
+      finishTipFlag  = true
+      let d4 = document.createElement('div');
+      d4.innerHTML = finishTip
+      container.appendChild(d4)
+      setTimeout(()=>{
+        $(document).scrollTop($("#content")[0].scrollHeight)
+        handleAddPage()
+      },300)
+      return
+    }
+    renderTimeout = setTimeout(() => {
+      processChunk()
+    }, RENDER_DELAY_MS);
+  }
+
+  let sxclSSE = '/gzblxt/sse/createCon'
+
+  // 珠海环境替换
+  if (sessionStorage.getItem('envZhuHai') === 'true') {
+    sxclSSE = sxclSSE.replace(/gzblxt/g, 'zhblxt');
+  }
+
+
+  let currentSseUid = null
+
+  let readyTimer = null
+
+
+  //初始化 sse 连接
+  function initSse(sseUid) {
+    currentSseUid = sseUid
+    source = null
+    if (!!window.EventSource) {
+      source = new EventSource(sxclSSE + '?uid=' + sseUid + '&token=' + sessionStorage.getItem('token'),{withCredentials: true});
+      //建立连接
+      source.onopen = function (event) {
+
+        handleResetTimer()
+
+        console.log("审讯策略：sse 已建立连接");
+        window.parent.postMessage({
+          type : 'handleShenXunCeLueOpenSuccess',
+          data : {
+            sseUid : sseUid
+          }
+        },'*')
+        onChunkReceived();
+      };
+      //接收数据
+      source.onmessage = function (event) {
+        buildPage(event.data);
+      };
+      //错误监听
+      source.onerror = function (event) {
+        errorTip = '当前服务繁忙，请稍后重试。'
+        console.log("审讯策略：sse 错误")
+        window.parent.postMessage({
+          type : 'handleSxclError',
+          data : {
+            errorTip: errorTip,
+          }
+        },'*')
+        return;
+      };
+
+      window.onbeforeunload = function () {
+        console.log("审讯策略：关闭了");
+        source.close()
+      };
+    } else {
+      console.log("审讯策略：浏览器不支持 SSE");
+    }
+  }
+
+  function handleResetTimer(){
+    if(daoJiShiInterval){
+      clearInterval(daoJiShiInterval)
+      daoJiShiCount = 0
+    }
+    daoJiShiInterval = setInterval(() => {
+      daoJiShiCount++
+      if (daoJiShiCount >= daoJiShi){
+        clearInterval(daoJiShiInterval)
+        daoJiShiCount = 0
+        errorTip = '当前服务繁忙，请稍后重试。'
+        console.log("审讯策略：sse 超时5分钟报错")
+        window.parent.postMessage({
+          type : 'handleSxclError',
+          data : {
+            errorTip: errorTip,
+          }
+        },'*')
+        return;
+      }
+    }, daoJiShiTime)
+
+  }
+
+  function buildPage(data){
+    handleResetTimer()
+
+
+    // 移除"data: "前缀
+    let jsonString = data.replace(/^data:\s?/, '');
+
+
+
+    function handleError() {
+      window.parent.postMessage({
+        type : 'handleSxclError',
+        data : {
+          errorTip: errorTip,
+        }
+      },'*')
+      return;
+    }
+
+
+    if( jsonString == 'event: ping'){
+      return;
+    }
+
+
+    if(data.indexOf('data')  == -1){
+      let newData = JSON.parse(data);
+      if(newData.status == 400 || newData.status == 500 || newData.status == 404){
+        errorTip = '当前服务繁忙，请稍后重试。'
+       console.log("审讯策略：sse 大模型错误 （400，500，404）")
+        handleError()
+        return
+      }
+    }
+
+    if( jsonString !== 'event: ping'){
+      let jsonObject = JSON.parse(jsonString);
+      if(jsonObject.event == 'error'){
+        errorTip = '当前服务繁忙，请稍后重试。'
+        console.log("审讯策略：sse 大模型错误 （400，500，404）")
+        handleError()
+        return
+      }
+      if(jsonObject.answer) {
+
+
+
+        let content = jsonObject.answer;
+
+        if(content.indexOf('<think>')> -1){
+
+          console.log('深度思考开始标志');
+          $("#loader-container").show();
+          content =  content.replace('<think>', "<pre class='think'>") ;
+        }else if( content.indexOf('</think>') > -1  ){
+          console.log('深度思考结束标志');
+          $("#loader-container").hide();
+          content = content.replace('</think>', "</pre>")
+        }
+        if(content){
+          finishTip = '本次AI生成内容已结束，相关结果仅供参考。'
+          conT += content;
+//         conT = `### 徐明涉案情况
+// - **身份背景**：未提供有效信息
+// - **涉案行为**：未提供有效信息
+// - **关联人员**：未提供有效信息
+//
+// ---
+//
+// ## 2. 人员关系图谱
+// \`\`\`mermaid
+// graph TD
+//     P1["徐明(被问话人)"]
+//     P2["XXX(毒贩)"]
+//     P3["XXX(买家)"]
+//     P4["XX(中间商)"]
+//     P1 -->|联系购买毒品| P2
+//     P1 -->|转交交易资金| P3
+//     P2 -->|分发毒品| P4
+//     P3 -->|支付定金| P1
+// \`\`\`
+//
+// ---
+//
+// ## 3. 案件核心事件总结
+// *注：因未提供完整笔录内容，此部分需补充时间线信息后方可完善。*
+//
+//
+// ## 2. 人员关系图谱
+// \`\`\`mermaid
+// graph TD
+//     P1["徐明(被问话人)"]
+//     P2["XXX(毒贩)"]
+//     P3["XXX(买家)"]
+//     P4["XX(中间商)"]
+//     P1 -->|联系购买毒品| P2
+//     P1 -->|转交交易资金| P3
+//     P2 -->|分发毒品| P4
+//     P3 -->|支付定金| P1
+// \`\`\`
+//
+// ## 3. 案件核心事件总结
+// *注：因未提供完整笔录内容，此部分需补充时间线信息后方可完善。*
+//
+// ---
+// `;
+        }
+      }
+
+      if(jsonObject.data && jsonObject.data.outputs && jsonObject.data.outputs.result && jsonObject.data.outputs.result.setted_error_msg){
+        errorTip = jsonObject.data.outputs.result.setted_error_msg
+        console.log("审讯策略：sse错误,具体原因是:" + jsonObject.data.outputs.result.setted_error_msg_console )
+      }
+
+      if(jsonObject.event == 'message_end'){
+        if(!conT){
+          handleError()
+        }else{
+          isFinish = true
+          if(daoJiShiInterval){
+            clearInterval(daoJiShiInterval)
+            daoJiShiCount = 0
+          }
+        }
+      }
+    }
+
+  }
+
+  function handleDealThink(){
+    // 查找唯一具有 class="think" 的元素
+    const thinkEl = document.querySelector('.think');
+    if (!thinkEl) return;
+
+    // 包裹原始元素，便于控制高度
+    const container = document.createElement('div');
+    container.className = 'think-container';
+    thinkEl.parentNode.insertBefore(container, thinkEl);
+    container.appendChild(thinkEl);
+
+    // 保存原始高度（自然高度）
+    const originalHeight = thinkEl.scrollHeight; // 注意：此时必须在 DOM 中且未被限制高度
+    container.style.height = '70px';
+
+    // 创建箭头按钮
+    const btn = document.createElement('div');
+    btn.className = 'think-arrow-btn';
+    btn.innerHTML = '▼'; // 初始为向下箭头（表示可展开）
+    container.appendChild(btn);
+
+    let isExpanded = false;
+
+    btn.addEventListener('click', function () {
+      if (isExpanded) {
+        // 收起
+        container.style.height = '70px';
+        btn.innerHTML = '▼';
+        isExpanded = false;
+      } else {
+        // 展开：恢复原始高度
+        container.style.height = 'inherit';
+        btn.innerHTML = '▲'; // 向上箭头表示可收起
+        isExpanded = true;
+      }
+    });
+  }
+
+  function getSvg(){
+
+
+    const svg2 = document.querySelectorAll('[id^="dsaveDome"]')
+    svg2.forEach((e)=>{
+      e.style.display = 'none'
+    })
+
+
+    const svg = document.querySelectorAll('[id^="saveDome"]')
+    if(svg && svg.length > 0){
+      let svgParent = []
+      svg.forEach(element => {
+        element.style.backgroundColor = 'transparent !important'
+        svgParent.push(element.parentNode)
+      });
+      return {
+        svg : svg,
+        svgParent : svgParent
+      }
+    }else{
+      let svgArr = []
+      let svgParent2 = []
+      const saveDom = document.querySelectorAll('[id^="saveDom"]')
+      saveDom.forEach(element => {
+        let s = element.querySelector('svg')
+        if(s){
+          svgArr.push(s)
+          svgParent2.push(element)
+        }
+      });
+      return {
+        svg : svgArr,
+        svgParent : svgParent2
+      }
+    }
+  }
+
+
+
+  function initData(data){
+    $("#loader-container").hide();
+    $('#jgDiv').html(data)
+    handleDealThink()
+  }
+
+  function closeSSE(){
+    if(source){
+      console.log("审讯策略：SSE关闭");
+      source.close()
+    }
+  }
+  let isAddSxclPageFlag = false
+
+
+
+  function showSiKao(){
+    $("#loader-container").show();
+    $("#jgDiv").html('');
+  }
+
+  function reset(){
+
+    isAddSxclPageFlag  = false
+    source = null
+    conT = ''
+    finishTip = '当前服务繁忙，请稍后重试。'
+    mermaidBefore = document.createElement('div');
+    SD = document.createElement('div')
+    flag = false
+    mFlag = false
+    finishIndex = 0
+    dom = document.createElement('div')
+    svgId = '';
+    index = 0;
+    xrFlag = false
+    isFinish = false
+    xfdom = null
+    successSvg = ''
+    showChunk = ''
+    renderTimeout = null;
+    svgDom = null
+    RENDER_DELAY_MS = 20;
+    mermaidFinish = false
+    svgIndex = 0
+    svgnewdom = null
+    currentSseUid = null
+    readyTimer = null
+    $("#loader-container").hide();
+     mermaidIndex = 0
+    finishIndexArr = []
+    finishTipFlag = false
+
+    if(daoJiShiInterval){
+      clearInterval(daoJiShiInterval)
+      daoJiShiCount = 0
+    }
+    errorTip = '当前服务繁忙，请稍后重试。'
+  }
+
+  function handleAddPage(){
+    console.log('保存审讯策略结果')
+    if(isAddSxclPageFlag) return
+    isAddSxclPageFlag = true
+    closeSSE()
+    var tqjg = $('#jgDiv').html();
+    window.parent.postMessage({
+      type : 'handleAddSxclPage',
+      data : {
+        type: 5,
+        tqjg: tqjg,
+        currentSseUid : currentSseUid
+      }
+    },'*')
+    //保存入库
+  }
+
+</script>
+</body>
+
+</html>
